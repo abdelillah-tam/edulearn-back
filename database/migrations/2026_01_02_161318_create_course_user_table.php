@@ -12,13 +12,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('objectives', function (Blueprint $table) {
+        Schema::create('course_user', function (Blueprint $table) {
             $table->id();
-            $table->string('objective');
-            $table->foreignIdFor(Course::class, 'course')
-                ->constrained('courses', 'id')->cascadeOnDelete();
+            $table->foreignIdFor(Course::class, 'course_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class, 'user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
-            $table->vector('embedding', 1536)->nullable();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('objectives');
+        Schema::dropIfExists('course_user');
     }
 };

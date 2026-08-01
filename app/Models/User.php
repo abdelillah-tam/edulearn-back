@@ -21,6 +21,7 @@ class User extends Authenticatable
         'fullname',
         'email',
         'password',
+        'type'
     ];
 
     /**
@@ -45,4 +46,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function instructor_courses()
+    {
+        return $this->hasMany(Course::class, 'instructor');
+    }
+
 }
