@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SigninRequest;
 use App\Http\Requests\SignupRequest;
-use App\Models\User;
 use Auth;
 use Hash;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Log;
 
 class UserController extends Controller
