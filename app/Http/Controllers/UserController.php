@@ -33,15 +33,13 @@ class UserController extends Controller
 
     public function signin(SigninRequest $request)
     {
-
-        Auth::check();
-
         if (Auth::attempt($request->validated())) {
+
             $request->session()->regenerate();
 
             $request->session()->save();
 
-            return response()->json(true);
+            return response()->json(data: Auth::user());
         }
 
         return response()->json(false);
@@ -56,13 +54,48 @@ class UserController extends Controller
 
         $request->session()->regenerateToken();
 
-        return response()->json('done');
+        return response()->json(true);
 
     }
 
-      public function test(Request $request)
+    public function isSignedIn(Request $request)
     {
-        return response()->json([Auth::check()]);
+        return response()->json(Auth::check());
+    }
+
+    public function getUser()
+    {
+        return response()->json(Auth()->user());
+    }
+
+    public function isInstructor()
+    {
+        if (!Auth::check()) {
+            return response()->json(false); // if there is no user logged in, return false
+        }
+
+        $user = Auth::user();
+
+        if ($user->type == 'Instructor') {
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+    }
+
+    public function isStudent()
+    {
+        if (!Auth::check()) {
+            return response()->json(false); // if there is no user logged in, return false
+        }
+
+        $user = Auth::user();
+
+        if ($user->type == 'Student') {
+            return response()->json(true);
+        }
+
+        return response()->json(false);
     }
 
 }

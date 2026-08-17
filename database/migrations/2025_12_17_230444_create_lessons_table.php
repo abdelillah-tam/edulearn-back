@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreignIdFor(Module::class, 'module')
                 ->constrained('modules', 'id')->cascadeOnDelete();
             $table->timestamps();
+             $table->vector('embedding', 1536)->nullable();
         });
     }
 

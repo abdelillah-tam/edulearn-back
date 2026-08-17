@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class CourseRequest extends FormRequest
 {
@@ -11,7 +12,11 @@ class CourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user('sanctum');
+
+        return $user->type === 'Instructor';
+
+
     }
 
     /**
@@ -28,7 +33,7 @@ class CourseRequest extends FormRequest
             'duration' => ['required'],
             'difficulty' => ['required'],
             'prerequisites' => ['required'],
-            'thumbnail' => ['required'],
+            'thumbnail' => ['required', 'file'],
             'objectives' => ['required'],
             'modules' => ['required']
         ];

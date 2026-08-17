@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->date('course_date')->useCurrent();
             $table->foreignIdFor(User::class, 'instructor')
                 ->constrained('users', 'id')->cascadeOnDelete();
+                 $table->vector('embedding', 1536)->nullable();
 
         });
     }

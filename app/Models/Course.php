@@ -24,4 +24,30 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'instructor');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class, 'course');
+    }
+
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'course');
+    }
+
+    public function lessons()
+    {
+        return $this->hasManyThrough(
+            Lesson::class,
+            Module::class,
+            'course',
+            'module'
+        );
+    }
 }

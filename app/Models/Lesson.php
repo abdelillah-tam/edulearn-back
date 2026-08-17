@@ -13,4 +13,9 @@ class Lesson extends Model
         'duration',
         'module'
     ];
+
+    public function watchers()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
