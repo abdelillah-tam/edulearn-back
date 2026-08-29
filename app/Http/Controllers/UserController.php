@@ -98,4 +98,33 @@ class UserController extends Controller
         return response()->json(false);
     }
 
+    public function getSetupIntent(Request $request)
+    {
+        return response()->json([
+            'client_secret' => $request->user()->createSetupIntent()->client_secret
+        ]);
+    }
+
+    public function subscribe(Request $request)
+    {
+        $request->validate([
+            'payment_method' => 'required|string',
+            'plan' => 'required|string', // Stripe Price ID (e.g., price_1N...)
+        ]);
+
+        $user = $request->user();
+
+        if ($user->subscribed()) {
+
+            return response()->json('You are already subscribed');
+        }
+        ;
+
+        // Create subscription using Cashier
+        $subscription = $user->newSubscription('default', $request->plan)
+            ->create($request->payment_method);
+
+        return response()->json(['status' => 'success', 'subscription' => $subscription]);
+    }
+
 }

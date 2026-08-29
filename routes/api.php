@@ -33,6 +33,8 @@ Route::middleware([StartSession::class])->group(function () {
         Route::get('/isStudent', [UserController::class, 'isStudent']);
         Route::get('/getInstructorCourses', [CourseController::class, 'getInstructorCourses']);
         Route::post('/signedIn', [UserController::class, 'isSignedIn']);
+        Route::get('/stripe/setup-intent', [UserController::class, 'getSetupIntent']);
+        Route::post('/stripe/subscribe', [UserController::class, 'subscribe']);
     });
 
 
