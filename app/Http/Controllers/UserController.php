@@ -114,6 +114,10 @@ class UserController extends Controller
 
         $user = $request->user();
 
+        if ($user->type == 'Instructor') {
+            return response()->json('Subscription is only for students', 404);
+        }
+
         if ($user->subscribed()) {
 
             return response()->json('You are already subscribed');

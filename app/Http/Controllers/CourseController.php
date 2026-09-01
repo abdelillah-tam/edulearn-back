@@ -161,9 +161,18 @@ class CourseController extends Controller
 
         $user = Auth::user();
 
-        $changes = $user->courses()->syncWithoutDetaching([$validated['course_id']]);
+        if ($user->type == 'Instructor') {
+            return response()->json('You cannot enroll courses with instructor account', 404);
+        }
+        if ($user->subscribed()) {
+            $changes = $user->courses()->syncWithoutDetaching([$validated['course_id']]);
 
-        return response()->json(!empty($changes['attached']));
+            return response()->json(!empty($changes['attached']));
+        } else {
+            return response()->json(['message' => 'You are not a subscriber', 'code' => 403]);
+        }
+
+
     }
 
     public function popularCourses()
