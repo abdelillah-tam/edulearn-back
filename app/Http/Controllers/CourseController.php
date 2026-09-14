@@ -139,6 +139,27 @@ class CourseController extends Controller
         return response()->json($course);
     }
 
+    public function getEnrolledCourse(Request $request, Course $enrolledCourse)
+    {
+        if ($request->user()->subscribed()) {
+            $enrolledCourse->load('objectives:id,course,objective')
+                ->load([
+                    'modules:modules.id,modules.course',
+                    'modules.lessons' => function ($query) use ($request) {
+                        $query->select(['id', 'lesson', 'module'])->withExists([
+                            'watchers as watched' => function ($watcher_query) use ($request) {
+                                $watcher_query->where('user_id', $request->user()->id);
+                            }
+                        ]);
+                    }
+                ]);
+
+            return response()->json($enrolledCourse);
+        }
+
+
+        return response()->json('You are not subscribed', 404);
+    }
     public function getCoursesEnrolled()
     {
         $user = Auth()->user();

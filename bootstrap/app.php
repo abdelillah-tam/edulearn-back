@@ -15,13 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         //
         $middleware->api();
         $middleware->statefulApi();
-        $middleware->validateCsrfTokens([
+       
+        $middleware->preventRequestForgery([
             'createCourse',
             'getAllCourses',
             'enroll',
             'setWatched',
             'signedIn',
-            'course/*'
+            'course/*',
+            'stripe/*'
         ]);
         $middleware->trustProxies('*');
 

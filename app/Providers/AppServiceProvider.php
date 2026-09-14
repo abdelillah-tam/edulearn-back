@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Cache;
 use Http;
 use League\Flysystem\Filesystem;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
+use Log;
+use Route;
 use Spatie\Dropbox\Client;
 use Spatie\FlysystemDropbox\DropboxAdapter;
 
@@ -56,6 +60,16 @@ class AppServiceProvider extends ServiceProvider
                 $adapter,
                 $config
             );
+        });
+
+        Route::bind('enrolledCourse', function (string $value) {
+            return Course::where('id', $value)->firstOrFail([
+                'id',
+                'title',
+                'description',
+                'category',
+                'duration', 
+            ]);
         });
     }
 }

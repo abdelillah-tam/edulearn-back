@@ -35,6 +35,8 @@ Route::middleware([StartSession::class])->group(function () {
         Route::post('/signedIn', [UserController::class, 'isSignedIn']);
         Route::get('/stripe/setup-intent', [UserController::class, 'getSetupIntent']);
         Route::post('/stripe/subscribe', [UserController::class, 'subscribe']);
+
+        Route::post('/courseEnrolled/{enrolledCourse}', [CourseController::class, 'getEnrolledCourse']);
     });
 
 
@@ -46,5 +48,4 @@ Route::middleware([StartSession::class])->group(function () {
 Route::post('/course/{course}', [CourseController::class, 'getCourse']);
 Route::post('/getAllCourses', [CourseController::class, 'getAllCourses']);
 Route::post('/getPopularCourses', [CourseController::class, 'popularCourses']);
-
 Route::post('/prompting', [CourseController::class, 'prompting']);

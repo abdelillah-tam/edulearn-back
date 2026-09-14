@@ -27,10 +27,11 @@ class AskingAgent implements Agent, Conversational, HasTools, HasStructuredOutpu
         return 'Search on the database for courses if user asks for them.'
         . 'return the courses in an array of objects with title, description, level and link.'
         . 'link looks like this: https://edu.tamoussat.com/course/{course_id}'
-        . 'If you did not find courses return a respectful response telling him that courses does not exist'
-        . 'And do not search on the web for courses, only search on the database'
-        . 'If he asked anything other than courses, do not do what he asked, and return a respectful response that you cannot help him'
-        . 'Be brief, do not return uncompleted response or unintelligible';
+        . 'If you did not find courses return a respectful response telling him that courses does not exist.'
+        . 'And do not search on the web for courses, only search on the database.'
+        . 'If he asked anything other than courses, do not do what he asked, and return a respectful response that you cannot help him.'
+        . 'Be brief, do not return uncompleted response or unintelligible.'
+        . 'Output full, exact values from the database fields (e.g., Course ID, Title, Description, Instructor, Schedule, Prerequisites, Tuition, Status) without summarizing, altering, or truncating text.';
         }
 
     /**
